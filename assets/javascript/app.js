@@ -1,5 +1,6 @@
 $( document ).ready(function() {
 
+// Trivia Q & A array
 const quizQuestions = [
     {
         question: "What is the capitol of Tennessee?",
@@ -96,9 +97,9 @@ function displayResults() {
         <p>You got ${wins} question(s) correct</p>
         <p>You incorrecty answered ${losses} question(s)<p>
         <p>You didn't even bother to answer ${unanswered} question(s)<p>
-        <button>Reset Game</button>
+        <button class="btn btn-primary reset">Reset Game</button>
     `;
-
+    $('#time').remove();
     $('#game').html(result);
 }
 
@@ -121,13 +122,26 @@ $(document).on('click', '.choice', function() {
     }
 });
 
+// Reset Game
+$(document).on('click', '.reset', function() {
+     counter = 5;
+     currentQuestion = 0;
+     wins = 0;
+     losses = 0;
+     unanswered = 0;
+     timer = null;
+     $('#game-running').prepend("<div class='col-sm-12' id='time'>");
+     loadQuestion();
+});
 
-
-$( ".start" ).click(function()  {
-    $("#game-start").remove();
-    $(".container").append("<div class='row' id='game-running'>")
-    $("#game-running").append("<div class='col-sm-12' id='time'>", "<div class='col-sm-12' id='game'>")
+// Start Game
+$('.start').click(function()  {
+    $('#game-start').remove();
+    $('.container').append("<div class='row' id='game-running'>")
+    $('#game-running').append("<div class='col-sm-12' id='time'>", "<div class='col-sm-12' id='game'>")
     loadQuestion();
 });
+
+
 
 });
