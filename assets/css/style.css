@@ -1,0 +1,20 @@
+.container {
+    padding-top: 5vh;
+    margin-top: 3vh;
+    margin-left: auto;
+    margin-right: auto;
+    border-radius: 0.5em;
+    text-align: center;
+    align-content: center;
+    max-width: 75vw;
+    min-height: 40vh;
+    background: #c1c2c2;
+}
+
+
+
+.btn.start {
+    margin: 5vh auto;
+    width: 50%;
+}
+
