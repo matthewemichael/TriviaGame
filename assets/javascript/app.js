@@ -22,7 +22,7 @@ const quizQuestions = [
 
 
 // Initial values
-let counter = 30;
+let counter = 5;
 let currentQuestion = 0;
 let wins = 0;
 let losses = 0;
@@ -30,25 +30,25 @@ let unanswered = 0;
 let timer;
 
 
+// When time expires go to next question
 function nextQuestion() {
-    currentQuestion++;
-    loadQuestion();
+    const isQuestionOver = (quizQuestions.length - 1) === currentQuestion;
+    if (isQuestionOver) {
+        //
+        displayResults();
+        console.log("game over")
+    }
+    else {
+        currentQuestion++;
+        loadQuestion();
+    }
 }
-
 
 // Stop timer
 function timeUp() {
     clearInterval(timer);
     unanswered++;
-    console.log(unanswered)
-    if (currentQuestion == 2) {
-        alert("Game Over!")
-    }
-    else {
-        nextQuestion();
-    }
-
-    
+    nextQuestion();
 }
 
 // Start a 30 second timer for each question
@@ -65,7 +65,7 @@ function countDown() {
 
 // Display the question and answers in the browser
 function loadQuestion() {
-    counter = 30;
+    counter = 5;
     timer = setInterval(countDown, 1000);
 
     const question = quizQuestions[currentQuestion].question; 
@@ -88,6 +88,39 @@ function loadAnswers(answers){
 
     return result;
 };
+
+// Display wins, losses and unanswered question stats at the end of the game
+function displayResults() {
+    const result = `
+        <p>Out of ${quizQuestions.length} questions...</p>
+        <p>You got ${wins} question(s) correct</p>
+        <p>You incorrecty answered ${losses} question(s)<p>
+        <p>You didn't even bother to answer ${unanswered} question(s)<p>
+        <button>Reset Game</button>
+    `;
+
+    $('#game').html(result);
+}
+
+
+// If right or wrong answer selected go to next question
+$(document).on('click', '.choice', function() {
+    clearInterval(timer);
+    const selectedAnswer = $(this).attr('data-answer');
+    const correctAnswer = quizQuestions[currentQuestion].correctAnswer;
+
+    if (correctAnswer === selectedAnswer) {
+        wins++
+        nextQuestion();
+        console.log("winner")
+    }
+    else {
+        losses++
+        nextQuestion();
+        console.log("loser")
+    }
+});
+
 
 
 $( ".start" ).click(function()  {
