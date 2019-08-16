@@ -29,12 +29,29 @@ let losses = 0;
 let unanswered = 0;
 let timer;
 
-// Start a 30 second timer for each question
 
-function timeUp() {
-    clearInterval(timer);
+function nextQuestion() {
+    currentQuestion++;
+    loadQuestion();
 }
 
+
+// Stop timer
+function timeUp() {
+    clearInterval(timer);
+    unanswered++;
+    console.log(unanswered)
+    if (currentQuestion == 2) {
+        alert("Game Over!")
+    }
+    else {
+        nextQuestion();
+    }
+
+    
+}
+
+// Start a 30 second timer for each question
 function countDown() {
     counter--;
 

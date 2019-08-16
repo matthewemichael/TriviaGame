@@ -7,11 +7,9 @@
     text-align: center;
     align-content: center;
     max-width: 75vw;
-    min-height: 40vh;
+    min-height: 50vh;
     background: #c1c2c2;
 }
-
-
 
 .btn.start {
     margin: 5vh auto;
