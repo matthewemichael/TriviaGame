@@ -41,6 +41,7 @@ function nextQuestion() {
     }
     else {
         currentQuestion++;
+        $('#game-running').prepend("<div class='col-sm-12' id='time'>");
         loadQuestion();
     }
 }
@@ -49,6 +50,7 @@ function nextQuestion() {
 function timeUp() {
     clearInterval(timer);
     unanswered++;
+    $('#time').remove();
     nextQuestion();
 }
 
@@ -70,6 +72,7 @@ function loadQuestion() {
     timer = setInterval(countDown, 1000);
 
     const question = quizQuestions[currentQuestion].question; 
+    console.log(currentQuestion)
     const answers = quizQuestions[currentQuestion].answers; 
 
     $('#time').html(`
@@ -89,6 +92,9 @@ function loadAnswers(answers){
 
     return result;
 };
+
+// Display image and incorrect guess message
+
 
 // Display wins, losses and unanswered question stats at the end of the game
 function displayResults() {
@@ -112,12 +118,38 @@ $(document).on('click', '.choice', function() {
 
     if (correctAnswer === selectedAnswer) {
         wins++
-        nextQuestion();
+        if (currentQuestion === 0) {
+            $('#time').remove();
+            $('#game').html(`
+                <h2>Correct!</h2>
+                <img src="assets/images/nashville.jpg" class="answerImg">
+            `);
+            setTimeout(nextQuestion, 3000);
+        }
+        if (currentQuestion === 1) {
+            $('#time').remove();
+            $('#game').html(`
+                <h2>Correct!</h2>
+                <img src="assets/images/tnreps.png" class="answerImg">
+                `);
+            setTimeout(nextQuestion, 3000);
+        }
+        if (currentQuestion === 2) {
+            $('#time').remove();
+            $('#game').html(`
+                <h2>Correct!</h2>
+                <img src="assets/images/tnprez.png" class="answerImg">
+                `);
+            setTimeout(nextQuestion, 3000);
+        }
+        
         console.log("winner")
     }
     else {
         losses++
-        nextQuestion();
+        $('#time').remove();
+        $('#game').html("<img src='assets/images/wrong.png' class='answerImg'>")
+        setTimeout(nextQuestion, 3000)
         console.log("loser")
     }
 });

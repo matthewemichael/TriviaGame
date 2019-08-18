@@ -24,3 +24,11 @@
     max-width: 50%;
     margin: 2vh auto; 
 }
+
+.answerImg {
+    max-width: 80%;
+    max-height: 80%;
+    display: block;
+    padding: 5vh;
+    margin: 0 auto;
+}
