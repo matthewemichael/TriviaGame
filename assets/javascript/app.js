@@ -53,8 +53,15 @@ function nextQuestion() {
 function timeUp() {
     clearInterval(timer);
     unanswered++;
+    const correctAnswer = quizQuestions[currentQuestion].correctAnswer;
+    
     $('#time').remove();
-    nextQuestion();
+    $('#game').html(`
+        <h2>Time is Up!</h2>
+        <h4>The correct answer was ${correctAnswer} </h4>
+    `);
+
+    setTimeout(nextQuestion, 3000);
 }
 
 // Start a 30 second timer for each question
@@ -75,7 +82,6 @@ function loadQuestion() {
     timer = setInterval(countDown, 1000);
 
     const question = quizQuestions[currentQuestion].question; 
-    console.log(currentQuestion)
     const answers = quizQuestions[currentQuestion].answers; 
 
     $('#time').html(`
@@ -96,73 +102,47 @@ function loadAnswers(answers){
     return result;
 };
 
-// Display image and incorrect guess message
-
-
 // Display wins, losses and unanswered question stats at the end of the game
 function displayResults() {
     const result = `
         <p>Out of ${quizQuestions.length} questions...</p>
         <p>You got ${wins} question(s) correct</p>
         <p>You incorrecty answered ${losses} question(s)<p>
-        <p>You didn't even bother to answer ${unanswered} question(s)<p>
+        <p>You didn't answer ${unanswered} question(s)<p>
         <button class="btn btn-primary reset">Reset Game</button>
     `;
     $('#time').remove();
     $('#game').html(result);
 }
 
-
 // If right or wrong answer selected go to next question
 $(document).on('click', '.choice', function() {
     clearInterval(timer);
     const selectedAnswer = $(this).attr('data-answer');
     const correctAnswer = quizQuestions[currentQuestion].correctAnswer;
-    const img = quizQuestions[currentQuestion].correctImage;
+    const correctImage = quizQuestions[currentQuestion].correctImage;
 
     if (correctAnswer === selectedAnswer) {
         wins++
         $('#time').remove();
         $('#game').html(`
             <h2>Correct!</h2>
-            <img class="answerImg" src="${img}" />
+            <img class="answerImg" src="${correctImage}" />
         `);
         
-        setTimeout(nextQuestion, 1000 * 10); 
-
-        // if (currentQuestion === 0) {
-        //     $('#time').remove();
-        //     $('#game').html(`
-        //         <h2>Correct!</h2>
-        //     `);
-        //     img.appendTo('#game');
-        //     setTimeout(nextQuestion, 3000);
-        // }
-        // if (currentQuestion === 1) {
-        //     $('#time').remove();
-        //     $('#game').html(`
-        //         <h2>Correct!</h2>
-        //         <img src="assets/images/tnreps.png" class="answerImg">
-        //         `);
-        //     setTimeout(nextQuestion, 3000);
-        // }
-        // if (currentQuestion === 2) {
-        //     $('#time').remove();
-        //     $('#game').html(`
-        //         <h2>Correct!</h2>
-        //         <img src="assets/images/tnprez.png" class="answerImg">
-        //         `);
-        //     setTimeout(nextQuestion, 3000);
-        // }
-        
-        // console.log("winner")
+        setTimeout(nextQuestion, 3000); 
     }
     else {
         losses++
         $('#time').remove();
-        $('#game').html("<img src='assets/images/wrong.png' class='answerImg'>")
+        // Display image and incorrect guess message
+        $('#game').html(`
+            <h2>Wrong!</h2>
+            <h4>The correct answer was ${correctAnswer} </h4>
+            <img class="wrongImg" src="assets/images/wrong.png" />
+        `);
+
         setTimeout(nextQuestion, 3000)
-        console.log("loser")
     }
 });
 
