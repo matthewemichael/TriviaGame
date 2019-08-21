@@ -5,25 +5,28 @@ const quizQuestions = [
     {
         question: "What is the capitol of Tennessee?",
         answers: ["Nashville", "Knoxville", "Memphis"],
-        correctAnswer: "Nashville"
+        correctAnswer: "Nashville",
+        correctImage: "assets/images/nashville.jpg"
     },
 
     {
         question: "How many congressmen does TN have in the House of Representatives?",
         answers: ["6", "7", "8", "9"],
-        correctAnswer: "9" 
+        correctAnswer: "9",
+        correctImage: "assets/images/tnreps.png"
     },
     
     {
         question: "How many presidents have been from Tennessee?",
         answers: ["1", "2", "3", "4"],
-        correctAnswer: "3" 
+        correctAnswer: "3",
+        correctImage: "assets/images/tnprez.png"
     }
 ];
 
 
 // Initial values
-let counter = 5;
+let counter = 20;
 let currentQuestion = 0;
 let wins = 0;
 let losses = 0;
@@ -68,7 +71,7 @@ function countDown() {
 
 // Display the question and answers in the browser
 function loadQuestion() {
-    counter = 5;
+    counter = 20;
     timer = setInterval(countDown, 1000);
 
     const question = quizQuestions[currentQuestion].question; 
@@ -115,35 +118,44 @@ $(document).on('click', '.choice', function() {
     clearInterval(timer);
     const selectedAnswer = $(this).attr('data-answer');
     const correctAnswer = quizQuestions[currentQuestion].correctAnswer;
+    const img = quizQuestions[currentQuestion].correctImage;
 
     if (correctAnswer === selectedAnswer) {
         wins++
-        if (currentQuestion === 0) {
-            $('#time').remove();
-            $('#game').html(`
-                <h2>Correct!</h2>
-                <img src="assets/images/nashville.jpg" class="answerImg">
-            `);
-            setTimeout(nextQuestion, 3000);
-        }
-        if (currentQuestion === 1) {
-            $('#time').remove();
-            $('#game').html(`
-                <h2>Correct!</h2>
-                <img src="assets/images/tnreps.png" class="answerImg">
-                `);
-            setTimeout(nextQuestion, 3000);
-        }
-        if (currentQuestion === 2) {
-            $('#time').remove();
-            $('#game').html(`
-                <h2>Correct!</h2>
-                <img src="assets/images/tnprez.png" class="answerImg">
-                `);
-            setTimeout(nextQuestion, 3000);
-        }
+        $('#time').remove();
+        $('#game').html(`
+            <h2>Correct!</h2>
+            <img class="answerImg" src="${img}" />
+        `);
         
-        console.log("winner")
+        setTimeout(nextQuestion, 1000 * 10); 
+
+        // if (currentQuestion === 0) {
+        //     $('#time').remove();
+        //     $('#game').html(`
+        //         <h2>Correct!</h2>
+        //     `);
+        //     img.appendTo('#game');
+        //     setTimeout(nextQuestion, 3000);
+        // }
+        // if (currentQuestion === 1) {
+        //     $('#time').remove();
+        //     $('#game').html(`
+        //         <h2>Correct!</h2>
+        //         <img src="assets/images/tnreps.png" class="answerImg">
+        //         `);
+        //     setTimeout(nextQuestion, 3000);
+        // }
+        // if (currentQuestion === 2) {
+        //     $('#time').remove();
+        //     $('#game').html(`
+        //         <h2>Correct!</h2>
+        //         <img src="assets/images/tnprez.png" class="answerImg">
+        //         `);
+        //     setTimeout(nextQuestion, 3000);
+        // }
+        
+        // console.log("winner")
     }
     else {
         losses++
@@ -156,7 +168,7 @@ $(document).on('click', '.choice', function() {
 
 // Reset Game
 $(document).on('click', '.reset', function() {
-     counter = 5;
+     counter = 20;
      currentQuestion = 0;
      wins = 0;
      losses = 0;
